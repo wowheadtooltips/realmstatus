@@ -1,0 +1,28 @@
+<h1>Listing realms</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Population</th>
+    <th>Locale</th>
+    <th>Status</th>
+  </tr>
+
+<% @realms.each do |realm| %>
+  <tr>
+    <td><%=h realm.name %></td>
+    <td><%=h realm.type %></td>
+    <td><%=h realm.population %></td>
+    <td><%=h realm.locale %></td>
+    <td><%=h realm.status %></td>
+    <td><%= link_to 'Show', realm %></td>
+    <td><%= link_to 'Edit', edit_realm_path(realm) %></td>
+    <td><%= link_to 'Destroy', realm, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New realm', new_realm_path %>

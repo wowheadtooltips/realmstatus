@@ -1,0 +1,28 @@
+<p>
+  <b>Name:</b>
+  <%=h @realm.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @realm.type %>
+</p>
+
+<p>
+  <b>Population:</b>
+  <%=h @realm.population %>
+</p>
+
+<p>
+  <b>Locale:</b>
+  <%=h @realm.locale %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @realm.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_realm_path(@realm) %> |
+<%= link_to 'Back', realms_path %>
