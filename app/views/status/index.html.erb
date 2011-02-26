@@ -1,2 +1,21 @@
-<h1>Status#index</h1>
-<p>Find me in app/views/status/index.html.erb</p>
+<table>
+	<tr>
+		<th width="5%">Status</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Population</th>
+		<th>Locale</th>
+		<th>Queue</th>
+	</tr>
+	
+	<% @realms.each do |realm| %>
+		<tr>
+			<td width="5%" align="center"><div class="<%= realm.status %>">&nbsp;</div></td>
+			<td align="left"><%= realm.name %></td>
+			<td align="center"><%= realm.type %></td>
+			<td align="center"><%= realm.population %></td>
+			<td align="center"><%= realm.locale %></td>
+			<td align="center"><%= realm.queue %></td>
+		</tr>
+	<% end %>
+</table>
