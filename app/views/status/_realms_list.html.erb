@@ -1,0 +1,31 @@
+<% if @total == 0 %>
+	<p>No entries found.</p>
+<% else %>
+	<table>
+		<tr>
+			<th width="5%">Status</th>
+			<th>Name</th>
+			<th>Type</th>
+			<th>Population</th>
+			<th>Locale</th>
+			<th>Queue</th>
+		</tr>
+		
+		<% @realms.each do |realm| %>
+			<tr class="<%= cycle('odd', 'even') %>">
+				<td width="5%" align="center">
+					<div class="status"><%= image_tag realm.status + ".png", :border => 0, :alt => realm.status.titleize, :title => realm.status.titleize %></div>
+				</td>
+				<td align="left"><%= realm.name %></td>
+				<td align="center"><%= realm.type %></td>
+				<td align="center"><%= realm.population %></td>
+				<td align="center"><%= realm.locale %></td>
+				<td align="center"><%= realm.queue %></td>
+			</tr>
+		<% end %>
+	</table>
+	<br />
+	<%= page_entries_info @realms %>
+	<%= will_paginate @realms, {:params => {:query => params[:query], :sort => params[:sort]}} %>
+	<br />
+<% end %>

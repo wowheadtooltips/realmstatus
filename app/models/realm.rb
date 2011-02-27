@@ -1,5 +1,3 @@
-require "nokogiri"
-require "open-uri"
 class Realm < ActiveRecord::Base
 	set_inheritance_column :ruby_type
 
@@ -15,9 +13,9 @@ class Realm < ActiveRecord::Base
 				realm = Realm.new
 				realm.name = row.css("td.name").text.squish
 				if row.at_css("td.status div")["class"] == "status-icon up"
-					realm.status = "status-up"
+					realm.status = "up"
 				else
-					realm.status = "status-down"
+					realm.status = "down"
 				end
 				realm.type = row.css("td.type span").text.squish
 				realm.population = row.css("td.population span").text.squish

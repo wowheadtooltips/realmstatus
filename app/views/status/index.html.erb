@@ -1,21 +1,20 @@
-<table>
-	<tr>
-		<th width="5%">Status</th>
-		<th>Name</th>
-		<th>Type</th>
-		<th>Population</th>
-		<th>Locale</th>
-		<th>Queue</th>
-	</tr>
-	
-	<% @realms.each do |realm| %>
-		<tr>
-			<td width="5%" align="center"><div class="<%= realm.status %>">&nbsp;</div></td>
-			<td align="left"><%= realm.name %></td>
-			<td align="center"><%= realm.type %></td>
-			<td align="center"><%= realm.population %></td>
-			<td align="center"><%= realm.locale %></td>
-			<td align="center"><%= realm.queue %></td>
-		</tr>
+<div style="float:left;display:inline;padding-left:3px;">
+	<% (97..122).to_a.each do |letter| %>
+		<%= sort_first_character letter.chr %>
+		&nbsp;|&nbsp;
 	<% end %>
-</table>
+	<%= sort_first_character 'reset' %>&nbsp;
+	<%= image_tag "spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner-char", :style => "display:none;" %>
+</div>
+<div id="dosearch" style="float:right;display:inline;padding-right:3px;">
+	<form name="sform" action="" method="post" style="display:inline;">
+		<%= text_field_tag :query, params['query'], :size => 10, :id => 'query' %>
+	</form>
+	<%= image_tag("spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner", :style => "display: none;" ) %>
+	<%= link_to "Advanced Search", {:controller => 'search', :action => 'index'} %>
+</div>
+<br /><br />
+<%= observe_field 'query', :frequency => 1, :update => 'table', :before => "jQuery('#spinner').show()", :success => "jQuery('#spinner').hide()", :url => {:action => 'index'}, :with => 'query' %>
+<div id="table">
+	<%= render :partial => "realms_list" %>
+</div>

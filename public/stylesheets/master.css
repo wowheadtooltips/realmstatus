@@ -68,6 +68,7 @@ div.title {
 	background-repeat: no-repeat;
 	height: 50px;
 	padding-bottom: 15px;
+	text-shadow: 0.1em 0.1em 0.2em gray;
 }
 div.nav {
 	width:50%;
@@ -385,4 +386,27 @@ form.searchform {
 #errorExplanation ul li {
   font-size: 12px;
   list-style: square;
+}
+
+/* Realms up or down */
+div.status {
+	width: 100%;
+	height: 25px;
+	clear: both;
+}
+div.status-up {
+	background-image: url('../images/up.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 100%;
+	clear: both;
+	height: 25px;
+}
+div.status-down {
+	background-image: url('../images/down.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 100%;
+	clear: both;
+	height: 25px;
 }
