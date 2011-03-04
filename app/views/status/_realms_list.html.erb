@@ -3,11 +3,26 @@
 <% else %>
 	<table>
 		<tr>
-			<th width="5%">Status</th>
-			<th>Name</th>
-			<th>Type</th>
-			<th>Population</th>
-			<th>Locale</th>
+			<th width="5%">
+				<%= image_tag("spinner.gif", :align => "absmiddle", :border => 0, :id => "spinner-status", :style => "display:none;") %>
+				<%= sort_site_helper "Status", "status" %>
+			</th>
+			<th>
+				<%= image_tag("spinner.gif", :align => "absmiddle", :border => 0, :id => "spinner-name", :style => "display:none;") %>
+				<%= sort_site_helper "Name", "name" %>
+			</th>
+			<th>
+				<%= image_tag("spinner.gif", :align => "absmiddle", :border => 0, :id => "spinner-type", :style => "display:none;") %>
+				<%= sort_site_helper "Type", "type" %>
+			</th>
+			<th>
+				<%= image_tag("spinner.gif", :align => "absmiddle", :border => 0, :id => "spinner-population", :style => "display:none;") %>
+				<%= sort_site_helper "Population", "population" %>
+			</th>
+			<th>
+				<%= image_tag("spinner.gif", :align => "absmiddle", :border => 0, :id => "spinner-locale", :style => "display:none;") %>
+				<%= sort_site_helper "Locale", "locale" %>
+			</th>
 			<th>Queue</th>
 		</tr>
 		
@@ -16,9 +31,9 @@
 				<td width="5%" align="center">
 					<div class="status"><%= image_tag realm.status + ".png", :border => 0, :alt => realm.status.titleize, :title => realm.status.titleize %></div>
 				</td>
-				<td align="left"><%= realm.name %></td>
+				<td align="left"><%= realm_url_helper(realm.name) %></td>
 				<td align="center"><%= realm.type %></td>
-				<td align="center"><%= realm.population %></td>
+				<td align="center" class="<%= realm.population.downcase %>"><%= realm.population %></td>
 				<td align="center"><%= realm.locale %></td>
 				<td align="center"><%= realm.queue %></td>
 			</tr>

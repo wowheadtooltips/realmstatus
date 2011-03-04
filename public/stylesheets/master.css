@@ -163,7 +163,7 @@ code {
 }
 
 /* default forms */
-.sitedb-form legend {
+.filterform legend {
 	color: #fff;
 	background: #B30000;
 	padding: 0.2em 1em;
@@ -172,10 +172,10 @@ code {
 	font-size: smaller;
 	margin-left: 15px;
 }
-.sitedb-form fieldset {
-	background: #efe;
+.filterform fieldset {
+	background: #EEEEEE;
 }
-.sitedb-form label {
+.filterform label {
 	width: 10em;
 	float: left;
 	text-align: right;
@@ -184,18 +184,18 @@ code {
 	display: block;
 	font-weight: bold;
 }
-.sitedb-form select, .sitedb-form textarea, .sitedb-form input, .sitedb-form password {
+.filterform select, .filterform textarea, .filterform input, .filterform password {
 	margin-left: 0.5em;
 	width: 250px;
 	border:2px solid #dddddd;
 	padding:5px;
 	color:#666666;
 }
-.sitedb-form .submit, .sitedb-form .reset, .sitedb-form button {
+.filterform .submit, .filterform .reset, .filterform button {
 	margin-left: 4em;
 	width: 150px;
 }
-.sitedb-form div {
+.filterform div {
 	margin: 0.5em 0;
 }
 div#dosearch {
@@ -297,26 +297,6 @@ div.content {
 	float:left;
 }
 
-
-/* sidebar */
-div.sidebar {
-	width:30%;
-	float:right;
-}
-div.sidebar ul {
-	list-style:none;
-	list-style-image:none;
-	padding:10px 10px 25px 10px;
-}
-div.sidebar ul li {
-	padding:7px 0;
-}
-div.sidebar ul li a {
-	font-family:Georgia, "Times New Roman", Times, serif;
-	text-decoration:none;
-	font-size:1.1em;
-}
-
 /* footer */
 div.footer {
 	clear:both;
@@ -394,19 +374,15 @@ div.status {
 	height: 25px;
 	clear: both;
 }
-div.status-up {
-	background-image: url('../images/up.png');
-	background-position: center center;
-	background-repeat: no-repeat;
-	width: 100%;
-	clear: both;
-	height: 25px;
+td.low {
+	color: #68A700;
+	font-weight: bold;
 }
-div.status-down {
-	background-image: url('../images/down.png');
-	background-position: center center;
-	background-repeat: no-repeat;
-	width: 100%;
-	clear: both;
-	height: 25px;
+td.medium {
+	color: #96A700;
+	font-weight: bold;
+}
+td.high {
+	color: #B30000;
+	font-weight: bold;
 }

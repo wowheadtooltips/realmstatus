@@ -5,16 +5,32 @@
 	<% end %>
 	<%= sort_first_character 'reset' %>&nbsp;
 	<%= image_tag "spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner-char", :style => "display:none;" %>
+	<span id="updatewait" style="display:none;">Updating Realms...Please Wait...</span>
+	<span id="doupdate">
+		|&nbsp;<%= link_to_remote "Update Realms", {
+			:update => "table", 
+			:before => "jQuery('#spinner-char').show(); jQuery('#updatewait').show(); jQuery('#doupdate').hide();",
+			:success => "jQuery('#spinner-char').hide(); jQuery('#updatewait').hide(); jQuery('#doupdate').show();",
+			:url => {:controller => "status", :action => "index", :params => params.merge({:do => "update", :page => nil})}
+		}, {:title => "Update Realm Status", :href => "#"} %>
+	</span>
 </div>
 <div id="dosearch" style="float:right;display:inline;padding-right:3px;">
 	<form name="sform" action="" method="post" style="display:inline;">
 		<%= text_field_tag :query, params['query'], :size => 10, :id => 'query' %>
 	</form>
 	<%= image_tag("spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner", :style => "display: none;" ) %>
-	<%= link_to "Advanced Search", {:controller => 'search', :action => 'index'} %>
 </div>
-<br /><br />
+<br />
 <%= observe_field 'query', :frequency => 1, :update => 'table', :before => "jQuery('#spinner').show()", :success => "jQuery('#spinner').hide()", :url => {:action => 'index'}, :with => 'query' %>
+<div class="filterform" align="left" style="display:block;padding-left:3px;margin-top:10px;margin-bottom:10px;">
+	<fieldset>
+		<legend>Filter Realms</legend>
+			<form name="filterage" action="" method="post" style="display:inline;">
+				
+			</form>
+	</fieldset>
+</div>
 <div id="table">
 	<%= render :partial => "realms_list" %>
 </div>

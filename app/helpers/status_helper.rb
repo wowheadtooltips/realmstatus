@@ -1,5 +1,9 @@
 module StatusHelper
-	def sites_sort_first_character(text)
+	def realm_url_helper(realm)
+		link_to realm.titleize.gsub('\\', ''), 'http://wowwiki.com/' + realm.titleize.gsub(' ', '_').gsub('\\', '')
+	end
+	
+	def sort_first_character(text)
 		
 		# make sure they don't want to reset
 		if text == 'reset'
@@ -20,12 +24,12 @@ module StatusHelper
 				# otherwise, create an AJAX link to sort via the letter
 				link_to_remote text.upcase,
 					{:update => 'table', :before => "jQuery('#spinner-char').show()", :success => "jQuery('#spinner-char').hide()", :url => {:controller => 'status', :action => 'index', :params => params.merge({:filter => filter, :page => nil})}},
-					{:title => "#{count} Sites", :href => '#'}
+					{:title => "#{count} Realms", :href => '#'}
 			end
 		end
 	end
 
-	def sites_sort_site_helper(text, param)
+	def sort_site_helper(text, param)
 		key = param
 		key += "_reverse" if params[:sort] == param
 		key = "name_reverse" if params[:sort].nil?
@@ -34,7 +38,7 @@ module StatusHelper
 			{:class => sort_th_class_helper(param), :title => "sort by this field", :href => '#'} #url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))}
 	end
 	
-	def sites_sort_th_class_helper(param)
+	def sort_th_class_helper(param)
 		result = 'sort-asc' if params[:sort] == param
 		result = 'sort-desc' if params[:sort] == param + '_reverse'
 		return result
