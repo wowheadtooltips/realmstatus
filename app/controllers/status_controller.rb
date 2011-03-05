@@ -35,6 +35,13 @@ class StatusController < ApplicationController
 			end
 		end
 		
+		# see if they want to filter by realm type
+		conditions = ["realmtype LIKE ?", "%#{params[:type]}%"] if !params[:type].nil? && params[:type].downcase.gsub(' ', '') != 'filterbytype'
+		# or maybe population?
+		conditions = ["population LIKE ?", "%#{params[:pop]}%"] if !params[:pop].nil? && params[:pop].downcase.gsub(' ', '') != 'filterbypopulation'
+		# or perhaps locale?
+		conditions = ["locale LIKE ?", "%#{params[:locale]}%"] if !params[:locale].nil? && params[:locale].downcase.gsub(' ', '') != 'filterbylocale'
+		
 		# pull the sites from the database
 		@total = Realm.count(:conditions => conditions)
 		@realms = Realm.paginate :page => params[:page], :per_page => 50, :conditions => conditions, :order => sort

@@ -32,7 +32,7 @@
 					<div class="status"><%= image_tag realm.status + ".png", :border => 0, :alt => realm.status.titleize, :title => realm.status.titleize %></div>
 				</td>
 				<td align="left"><%= realm_url_helper(realm.name) %></td>
-				<td align="center"><%= realm.type %></td>
+				<td align="center"><%= realm.realmtype %></td>
 				<td align="center" class="<%= realm.population.downcase %>"><%= realm.population %></td>
 				<td align="center"><%= realm.locale %></td>
 				<td align="center"><%= realm.queue %></td>
@@ -41,6 +41,6 @@
 	</table>
 	<br />
 	<%= page_entries_info @realms %>
-	<%= will_paginate @realms, {:params => {:query => params[:query], :sort => params[:sort]}} %>
+	<%= will_paginate @realms, {:params => {:query => params[:query], :sort => params[:sort], :type => params[:type], :pop => params[:pop], :locale => params[:locale]}} %>
 	<br />
 <% end %>

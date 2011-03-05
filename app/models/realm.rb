@@ -1,31 +1,38 @@
 class Realm < ActiveRecord::Base
-	set_inheritance_column :ruby_type
+	POPULATION = [
+		'Filter by Population',
+		'Low',
+		'Medium',
+		'High'
+	]
 
 	def self.getrealms
 		# empty the database
-		Realm.delete_all
-		# query the new site
-		url = "http://us.battle.net/wow/en/status"
-		data = Nokogiri::HTML(open(url, "UserAgent" => "Ruby-OpenURI").read)
+		self.delete_all
 		rows = ["tr.row1", "tr.row2"]
-		rows.each do |x|
-			data.css(x).each do |row|
-				realm = Realm.new
-				realm.name = row.css("td.name").text.squish
-				if row.at_css("td.status div")["class"] == "status-icon up"
-					realm.status = "up"
-				else
-					realm.status = "down"
+		# query the new US site
+		urls = ["http://us.battle.net/wow/en/status", "http://eu.battle.net/wow/en/status"]
+		urls.each do |url|
+			data = Nokogiri::HTML(open(url, "UserAgent" => "Ruby-OpenURI").read)
+			rows.each do |x|
+				data.css(x).each do |row|
+					realm = Realm.new
+					realm.name = row.css("td.name").text.squish
+					if row.at_css("td.status div")["class"] == "status-icon up"
+						realm.status = "up"
+					else
+						realm.status = "down"
+					end
+					realm.realmtype = row.css("td.type span").text.squish.gsub('(', '').gsub(')', '')
+					realm.population = row.css("td.population span").text.squish
+					realm.locale = row.css("td.locale").text.squish
+					if row.css("td.queue").text.squish.empty?
+						realm.queue = "None"
+					else
+						realm.queue = row.css("td.queue").text.squish
+					end	
+					realm.save
 				end
-				realm.type = row.css("td.type span").text.squish.gsub('(', '').gsub(')', '')
-				realm.population = row.css("td.population span").text.squish
-				realm.locale = row.css("td.locale").text.squish
-				if row.css("td.queue").text.squish.empty?
-					realm.queue = "None"
-				else
-					realm.queue = row.css("td.queue").text.squish
-				end	
-				realm.save
 			end
 		end
 	end
@@ -48,5 +55,33 @@ class Realm < ActiveRecord::Base
 		realms = realms.compact.sort
 		realms.reject(&:blank?)
 		realms.insert(0, 'Sort by Realm')
+	end
+	
+	# list of types for select form
+	def self.gettypes
+		realms = self.find(:all)
+		types = []; x = 0;
+		realms.each do |realm|
+			if !types.nil? && !types.include?(realm.realmtype)
+				types[x] = realm.realmtype
+				x += 1
+			end
+		end
+		types = types.compact.sort
+		types.insert(0, 'Filter by Type')
+	end
+	
+	# list of locales for select form
+	def self.getlocales
+		realms = self.find(:all)
+		locales = []; x = 0;
+		realms.each do |realm|
+			if !locales.nil? && !locales.include?(realm.locale)
+				locales[x] = realm.locale
+				x += 1
+			end
+		end
+		locales = locales.compact.sort
+		locales.insert(0, 'Filter by Locale')
 	end
 end

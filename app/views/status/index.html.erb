@@ -24,11 +24,19 @@
 <br />
 <%= observe_field 'query', :frequency => 1, :update => 'table', :before => "jQuery('#spinner').show()", :success => "jQuery('#spinner').hide()", :url => {:action => 'index'}, :with => 'query' %>
 <div class="filterform" align="left" style="display:block;padding-left:3px;margin-top:10px;margin-bottom:10px;">
-	<fieldset>
+	<fieldset style="padding-bottom:10px;">
 		<legend>Filter Realms</legend>
 			<form name="filterage" action="" method="post" style="display:inline;">
-				
+				<%= image_tag("spinner-search.gif", :align => "middle", :border => 0, :id => "spinner-type", :style => "display:none;") %>
+				<%= select_tag "type", options_for_select(Realm.gettypes) %>&nbsp;&nbsp;
+				<%= image_tag("spinner-search.gif", :align => "middle", :border => 0, :id => "spinner-pop", :style => "display:none;") %>
+				<%= select_tag "pop", options_for_select(Realm::POPULATION) %>&nbsp;&nbsp;
+				<%= image_tag("spinner-search.gif", :align => "middle", :border => 0, :id => "spinner-locale", :style => "display:none;") %>
+				<%= select_tag "locale", options_for_select(Realm.getlocales) %>&nbsp;&nbsp;
 			</form>
+			<%= observe_field "type", :frequency => 2, :update => "table", :before => "jQuery('#spinner-type').show();", :success => "jQuery('#spinner-type').hide();", :url => {:controller => "status", :action => "index"}, :with => "type" %>
+			<%= observe_field "pop", :frequency => 2, :update => "table", :before => "jQuery('#spinner-pop').show();", :success => "jQuery('#spinner-pop').hide();", :url => {:controller => "status", :action => "index"}, :with => "pop" %>
+			<%= observe_field "locale", :frequency => 2, :update => "table", :before => "jQuery('#spinner-locale').show();", :success => "jQuery('#spinner-locale').hide();", :url => {:controller => "status", :action => "index"}, :with => "locale" %>
 	</fieldset>
 </div>
 <div id="table">
