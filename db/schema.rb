@@ -12,14 +12,13 @@
 ActiveRecord::Schema.define(:version => 20110224041057) do
 
   create_table "realms", :force => true do |t|
-    t.string   "name"
-    t.string   "realmtype"
-    t.string   "population"
-    t.string   "locale"
-    t.string   "status"
-    t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
+    t.string "realmtype"
+    t.string "population"
+    t.string "locale"
+    t.string "status"
+    t.string "queue"
+    t.string "flag"
   end
 
 end

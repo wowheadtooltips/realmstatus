@@ -376,13 +376,21 @@ div.status {
 }
 td.low {
 	color: #68A700;
-	font-weight: bold;
 }
 td.medium {
 	color: #96A700;
-	font-weight: bold;
 }
 td.high {
 	color: #B30000;
-	font-weight: bold;
+}
+
+/* Realm Type */
+td.rp {
+	color: #68A700;
+}
+td.pve {
+	color: #96A700;
+}
+td.pvp, td.rppvp {
+	color: #B30000;
 }

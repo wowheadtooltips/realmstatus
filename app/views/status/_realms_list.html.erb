@@ -32,9 +32,9 @@
 					<div class="status"><%= image_tag realm.status + ".png", :border => 0, :alt => realm.status.titleize, :title => realm.status.titleize %></div>
 				</td>
 				<td align="left"><%= realm_url_helper(realm.name) %></td>
-				<td align="center"><%= realm.realmtype %></td>
+				<td align="center" class="<%= realm.realmtype.downcase.gsub(' ', '') %>"><%= realm.realmtype %></td>
 				<td align="center" class="<%= realm.population.downcase %>"><%= realm.population %></td>
-				<td align="center"><%= realm.locale %></td>
+				<td align="center"><%= image_tag("flags/" + realm.flag, :title => realm.locale) %>&nbsp;<%= realm.locale %></td>
 				<td align="center"><%= realm.queue %></td>
 			</tr>
 		<% end %>

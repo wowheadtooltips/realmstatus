@@ -30,7 +30,8 @@ class Realm < ActiveRecord::Base
 						realm.queue = "None"
 					else
 						realm.queue = row.css("td.queue").text.squish
-					end	
+					end
+					realm.flag = row.css("td.locale").text.squish.downcase.gsub(' ', '') + ".png"
 					realm.save
 				end
 			end

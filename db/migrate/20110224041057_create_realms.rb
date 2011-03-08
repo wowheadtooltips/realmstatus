@@ -7,8 +7,7 @@ class CreateRealms < ActiveRecord::Migration
       t.string :locale
       t.string :status
       t.string :queue
-
-      t.timestamps
+      t.string :flag
     end
   end
 
