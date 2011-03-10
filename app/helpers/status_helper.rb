@@ -1,6 +1,9 @@
 module StatusHelper
-	def realm_url_helper(realm)
-		link_to realm.titleize.gsub('\\', ''), 'http://wowwiki.com/' + realm.titleize.gsub(' ', '_').gsub('\\', '')
+	def realm_url_helper(realm, locale)
+		eu = ['english', 'french', 'german', 'russian', 'spanish', 'oceanic']
+		url = 'http://wowwiki.com/Server:' + realm.titleize.gsub(' ', '_').gsub('\\', '')
+		url += '_Europe' if eu.include?(locale.downcase)
+		link_to realm.titleize.gsub('\\', ''), url
 	end
 	
 	def sort_first_character(text)
