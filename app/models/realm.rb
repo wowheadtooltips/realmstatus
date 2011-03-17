@@ -5,11 +5,12 @@ class Realm < ActiveRecord::Base
 		'Medium',
 		'High'
 	]
-
+	
 	def self.getrealms
 		# empty the database
 		self.delete_all
 		rows = ["tr.row1", "tr.row2"]
+		timenow = Time.now.to_i
 		# query the new US site
 		urls = ["http://us.battle.net/wow/en/status", "http://eu.battle.net/wow/en/status"]
 		urls.each do |url|
@@ -26,6 +27,7 @@ class Realm < ActiveRecord::Base
 					realm.realmtype = row.css("td.type span").text.squish.gsub('(', '').gsub(')', '')
 					realm.population = row.css("td.population span").text.squish
 					realm.locale = row.css("td.locale").text.squish
+					realm.added = timenow
 					if row.css("td.queue").text.squish.empty?
 						realm.queue = "None"
 					else
@@ -84,5 +86,21 @@ class Realm < ActiveRecord::Base
 		end
 		locales = locales.compact.sort
 		locales.insert(0, 'Filter by Locale')
+	end
+	
+	# get last updated time
+	def self.update?
+		# return true if there are no realms
+		return true if Realm.count(:all) == 0
+		
+		# get the current timestamp
+		cur = Time.now.to_i
+		
+		# get the last update from sql, plus one hour (3600 seconds)
+		entry = self.first
+		added = entry.added.to_i + 3600
+		
+		# if an hour has passed since last update, then another is required
+		return cur > added ? true : false
 	end
 end

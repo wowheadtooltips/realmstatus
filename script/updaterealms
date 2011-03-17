@@ -6,6 +6,7 @@ class UpdateRealms
 		Realm.delete_all
 		puts "Removing old realm data."
 		rows = ["tr.row1", "tr.row2"]
+		timenow = Time.now.to_i # unix timestamp of right now
 		
 		# keep track of realms that are up and down
 		up = down = total = 0
@@ -46,10 +47,11 @@ class UpdateRealms
 						down += 1
 					end
 					
-					# realm type, population and locale
+					# realm type, population, locale, and the timestamp (for updating purposes)
 					realm.realmtype = row.css("td.type span").text.squish.gsub('(', '').gsub(')', '')
 					realm.population = row.css("td.population span").text.squish
 					realm.locale = row.css("td.locale").text.squish
+					realm.added = timenow
 					
 					# realm queue (if any)
 					if row.css("td.queue").text.squish.empty?
