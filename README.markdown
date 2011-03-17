@@ -21,6 +21,9 @@ This a proof of concept application I wrote to prove the ability to be able to s
 5. Run `ruby script/update` from the command line to parse the realm list and fill your database.
 6. **OPTIONAL** The application is designed to request an update every hour.  You could setup a CRON job to run the `ruby script/update` script every x, or use the built in system.
 
+## TODO
++ I am aware that the sort by first letter is not currently functioning.  While I am not sure why, I will get it fixed A.S.A.P.
+
 ## Contact
 + Website: <http://wowhead-tooltips.com>
 + E-Mail: <adam@wowhead-tooltips.com>
