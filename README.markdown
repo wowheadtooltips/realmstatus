@@ -1,1 +1,2 @@
-**Coming Soon!**
+# Wowhead Tooltips Realm Status
+This a proof of concept application I wrote to prove the ability to be able to scrape data from WoW's new Battle.net website.  This is in anticipation of the new method of querying the new armory site.  While this is only a proof of concept application, it has all the bells and whistles, and is running full time at [http://realms.wowhead-tooltips.com](http://realms.wowhead-tooltips.com).
