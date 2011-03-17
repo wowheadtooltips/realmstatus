@@ -47,4 +47,5 @@ ActionController::Routing::Routes.draw do |map|
   map.forums 'forums', :controller => 'status', :action => 'forums'		# goto the forums
   map.wiki 'wiki', :controller => 'status', :action => 'wiki'					# goto the documentation wiki
   map.sitedb 'sitedb', :controller => 'status', :action => 'sitedb'		# goto the site database
+  map.update 'update', :controller => 'status', :action => 'update'		# update realm list
 end

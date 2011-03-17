@@ -8,7 +8,7 @@ class CreateRealms < ActiveRecord::Migration
       t.string :status
       t.string :queue
       t.string :flag
-      t.integer :added
+      t.datetime :added
     end
   end
 

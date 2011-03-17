@@ -40,6 +40,7 @@
 				</div>
 				<div class="footer">
 					<p>
+						Realm list last updated <strong><%= @last.localtime.strftime("%Y-%m-%d at %I:%M:%S%p").to_s.downcase %></strong>.<br />
 						&copy; 2011 <%= link_to 'Wowhead Tooltips', 'http://wowhead-tooltips.com' %>, <%= link_to 'Wowhead', 'http://wowhead.com' %> name used with permission.<br />
 						Powered by <%= link_to 'Ruby on Rails', 'http://rubyonrails.org' %><br />
 						<a href="http://validator.w3.org/check/referer" title="valid XHTML">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer" title="valid CSS">CSS</a>

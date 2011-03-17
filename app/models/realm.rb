@@ -9,11 +9,17 @@ class Realm < ActiveRecord::Base
 	def self.getrealms
 		# empty the database
 		self.delete_all
+		
+		# table rows for each realm
 		rows = ["tr.row1", "tr.row2"]
-		timenow = Time.now.to_i
-		# query the new US site
+		
+		# current timestamp
+		timenow = Time.now
+		
+		# the two realm status site urls
 		urls = ["http://us.battle.net/wow/en/status", "http://eu.battle.net/wow/en/status"]
 		urls.each do |url|
+			# pull data from battle.net sites
 			data = Nokogiri::HTML(open(url, "UserAgent" => "Ruby-OpenURI").read)
 			rows.each do |x|
 				data.css(x).each do |row|
@@ -88,7 +94,7 @@ class Realm < ActiveRecord::Base
 		locales.insert(0, 'Filter by Locale')
 	end
 	
-	# get last updated time
+	# see if realms require an update
 	def self.update?
 		# return true if there are no realms
 		return true if Realm.count(:all) == 0
@@ -98,9 +104,15 @@ class Realm < ActiveRecord::Base
 		
 		# get the last update from sql, plus one hour (3600 seconds)
 		entry = self.first
-		added = entry.added.to_i + 3600
+		added = entry.added.to_i + 3600 # => 3600 seconds is one hour
 		
 		# if an hour has passed since last update, then another is required
 		return cur > added ? true : false
+	end
+	
+	def self.lastupdate
+		return false if Realm.count(:all) == 0
+		entry = self.first
+		entry.added
 	end
 end

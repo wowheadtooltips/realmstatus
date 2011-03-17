@@ -394,3 +394,26 @@ td.pve {
 td.pvp, td.rppvp {
 	color: #B30000;
 }
+
+/* Realm Update Notice */
+div#needs_update {
+	background-color: #FFFFDD;
+	border: 1px dashed #000000;
+	text-align: center;
+	width: 100%;
+	clear: both;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+div#needs_update a:link, div#needs_update a:active, div#needs_update a:visited {
+	color: blue;
+	text-decoration: none;
+}
+
+div#needs_update a:hover {
+	color: blue;
+	text-decoration: underline;
+}

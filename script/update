@@ -1,0 +1,92 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/../config/environment'
+class UpdateRealms
+	def self.doit
+		# empty the database
+		Realm.delete_all
+		puts "Removing old realm data."
+		rows = ["tr.row1", "tr.row2"]
+		timenow = Time.now # unix timestamp of right now
+		
+		# keep track of realms that are up and down
+		up = down = total = 0
+		
+		# query the new US site
+		urls = ["http://us.battle.net/wow/en/status", "http://eu.battle.net/wow/en/status"]
+		urls.each do |url|
+			
+			# update the console
+			if url == "http://us.battle.net/wow/en/status"
+				puts "Updating US realms...1/2"
+			else
+				puts "Updating EU realms...2/2"
+			end
+			
+			# read the data with nokogiri
+			data = Nokogiri::HTML(open(url, "UserAgent" => "Ruby-OpenURI").read)
+			
+			# find each realm row
+			rows.each do |x|
+				
+				# get the total number of realms to add
+				i = 1; z = 0; data.css(x).each {|row| z += 1};
+				
+				# loop through the realms table (html, not mysql)
+				data.css(x).each do |row|
+					realm = Realm.new
+					
+					#realm name
+					realm.name = row.css("td.name").text.squish
+					
+					#realm status (up or down)
+					if row.at_css("td.status div")["class"] == "status-icon up"
+						realm.status = "up"
+						up += 1
+					else
+						realm.status = "down"
+						down += 1
+					end
+					
+					# realm type, population, locale, and the timestamp (for updating purposes)
+					realm.realmtype = row.css("td.type span").text.squish.gsub('(', '').gsub(')', '')
+					realm.population = row.css("td.population span").text.squish
+					realm.locale = row.css("td.locale").text.squish
+					realm.added = timenow
+					
+					# realm queue (if any)
+					if row.css("td.queue").text.squish.empty?
+						realm.queue = "None"
+					else
+						realm.queue = row.css("td.queue").text.squish
+					end
+					
+					# finally, the flag
+					realm.flag = row.css("td.locale").text.squish.downcase.gsub(' ', '') + ".png"
+					
+					# calculate the percentage done
+					percentage = (i.to_f / z.to_f) * 100
+					percentage = (percentage * 100).round.to_f / 100
+					
+					# attempt to add the realm to the sql table
+					if realm.save
+						puts "ADDED REALM " + row.css("td.name").text.squish + " " + percentage.to_s + "% (" + i.to_s + "/" + z.to_s + ")"
+					else
+						puts "FAILED TO ADD REALM " + row.css("td.name").text.squish + " " + percentage.to_s + "% (" + i.to_s + "/" + z.to_s + ")"
+					end
+					i += 1; total += 1;
+				end
+			end
+		end
+		
+		# calculate the up and down percentage
+		up_percentage = (up.to_f / total.to_f) * 100
+		up_percentage = (up_percentage * 100).round.to_f / 100
+		down_percentage = (down.to_f / total.to_f) * 100
+		down_percentage = (down_percentage * 100).round.to_f / 100
+		
+		puts "Finished updating realms. " + total.to_s + " total, " + up.to_s + " (" + up_percentage.to_s + "%) Up, " + down.to_s + " (" + down_percentage.to_s + "%) Down"
+	end
+end
+
+UpdateRealms.doit
+

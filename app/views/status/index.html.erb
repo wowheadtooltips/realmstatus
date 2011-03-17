@@ -1,3 +1,23 @@
+<% if Realm.update? %>
+	<div id="needs_update">
+		A realm update has been requested.
+		<%= link_to "Click Here", update_url %> to begin the update.<br />
+		<span style="font-style:italic;font-weight:normal;">This may take a few seconds to finish.</span>
+	</div>
+	<script type="text/javascript">
+		<%= visual_effect(:blind_down, "needs_update") %>
+	</script>
+	<br />
+<% end %>
+<% if flash[:notice] -%>
+	<div id="notice">
+		<a href="#" onclick="jQuery('#notice').hide();" style="float:right;"><%= image_tag("error.png", :border => 0, :width => 15, :height => 15) %></a>
+		<%= flash[:notice] %>
+	</div>
+	<script type="text/javascript">
+		<%= visual_effect(:highlight, "notice", :startcolor => "#ffff99", :endcolor => "#f0f0f0") %>
+	</script>
+<% end -%>
 <div style="float:left;display:inline;padding-left:3px;">
 	<% (97..122).to_a.each do |letter| %>
 		<%= sort_first_character letter.chr %>
@@ -5,15 +25,6 @@
 	<% end %>
 	<%= sort_first_character 'reset' %>&nbsp;
 	<%= image_tag "spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner-char", :style => "display:none;" %>
-	<span id="updatewait" style="display:none;">Updating Realms...Please Wait...</span>
-	<span id="doupdate">
-		|&nbsp;<%= link_to_remote "Update Realms", {
-			:update => "table", 
-			:before => "jQuery('#spinner-char').show(); jQuery('#updatewait').show(); jQuery('#doupdate').hide();",
-			:success => "jQuery('#spinner-char').hide(); jQuery('#updatewait').hide(); jQuery('#doupdate').show();",
-			:url => {:controller => "status", :action => "index", :params => params.merge({:do => "update", :page => nil})}
-		}, {:title => "Update Realm Status", :href => "#"} %>
-	</span>
 </div>
 <div id="dosearch" style="float:right;display:inline;padding-right:3px;">
 	<form name="sform" action="" method="post" style="display:inline;">
