@@ -1,15 +1,19 @@
 class StatusController < ApplicationController
   def index
+  	
+  	# update realm list
+  	Realm.getrealms if !params[:do].nil? && params[:do] == "update"
+  
 		# for column sorting
 		sort = case params[:sort]
 			when "name" then "name ASC"
 			when "status" then "status ASC"
-			when "type" then "type ASC"
+			when "type" then "realmtype ASC"
 			when "population" then "population ASC"
 			when "locale" then "locale ASC"
 			when "name_reverse" then "name DESC"
 			when "status_reverse" then "status DESC"
-			when "type_reverse" then "type DESC"
+			when "type_reverse" then "realmtype DESC"
 			when "population_reverse" then "population DESC"
 			when "locale_reverse" then "locale DESC"
 		end
@@ -21,13 +25,13 @@ class StatusController < ApplicationController
 		# see how they want to filter
 		if params[:filter].nil?
 			# for searches
-			conditions = ["name LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
+			conditions = ["LOWER(name) LIKE ?", "%#{params[:query]}%"] unless params[:query].nil?
 		else
 			# filter by first character
 			if params[:filter] == 'reset'
 				conditions = ''
 			else
-				conditions = ["name LIKE ?", "#{params[:filter]}%"]
+				conditions = ["LOWER(name) LIKE ?", "#{params[:filter]}%"]
 			end
 		end
 		
@@ -48,7 +52,7 @@ class StatusController < ApplicationController
 			@realms.each {|realm| realm.name.gsub!("#{params[:query]}", "<span class=\"highlight\">#{params[:query]}</span>")}
 		end
 		
-		# use ajax to update the site list
+		# use ajax to update the realm list
 		if request.xhr?
 			render :partial => "realms_list", :layout => false
 		else
@@ -58,14 +62,9 @@ class StatusController < ApplicationController
 			end
 		end
   end
-
+  
   def update
-  	if Realm.update?
-  		Realm.getrealms
-  		flash[:notice] = "Realm list successfully updated!"
-  	else
-  		flash[:notice] = "Realm list update is not yet required."
-  	end
+  	Realm.getrealms if Realm.update? || (!params[:do].nil? && params[:do] == "update")
   	redirect_to :controller => "status", :action => "index"
   end
 

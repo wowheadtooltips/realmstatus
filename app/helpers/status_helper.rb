@@ -15,7 +15,7 @@ module StatusHelper
 			{:title => "Reset Filter", :href => '#'}
 		else 
 			# get the count of the letter
-			count = Realm.first_letter(text)
+			count = Realm.find(:all, :conditions => ["LOWER (name) LIKE ?", "#{text.downcase}%"]).count
 		
 			# set the filter
 			filter = text.downcase if count > 0

@@ -1,23 +1,51 @@
 <% if Realm.update? %>
 	<div id="needs_update">
-		A realm update has been requested.
-		<%= link_to "Click Here", update_url %> to begin the update.<br />
-		<span style="font-style:italic;font-weight:normal;">This may take a few seconds to finish.</span>
+		<a href="#" onclick="jQuery('#needs_update').hide(); jQuery('#update_filler').hide();" style="float:right;padding-right:5px;">
+			<%= image_tag("close.png", :align => "absmiddle", :border => 0, :height => 15, :width => 15, :title => "Click to Ignore") %>
+		</a>
+		<div id="update_main">
+			<%= image_tag("notice.png", :align => "absmiddle", :border => 0, :height => 15, :width => 15) %>
+			Realm list update is required.
+			<%=
+				link_to_remote "Click Here",
+					{
+						:update => "table",
+						:before => "jQuery('#update_main').hide();jQuery('#update_progress').show();",
+						:success => "jQuery('#update_progress').hide();jQuery('#update_finish').show();",
+						:url => {
+							:controller => "status",
+							:action => "index",
+							:params => params.merge({:do => "update"})
+						}
+					}, {:title => "Begin Update", :href => "#"}
+			%> to begin the update.
+		</div>
+		<div id="update_progress" style="display:none;">
+			<%= image_tag("spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner-update") %>
+			Update is in progress.  <span style="font-style:italic;font-weight:normal;">Please wait...</span>
+		</div>
+		<div id="update_finish" style="display:none;">
+			<%= image_tag("success.png", :align => "absmiddle", :border => 0, :height => 15, :width => 15) %>
+			Update was successful!
+			<%=
+				link_to_remote "Click here",
+					{
+						:update => "table",
+						:before => "",
+						:success => "jQuery('#last_update').html('" + Time.now.localtime.to_s(:long) + "'); jQuery('#needs_update').hide(); jQuery('#update_filler').hide();",
+						:url => {
+							:controller => "status",
+							:action => "index"
+						}
+					}, {:title => "Reload page", :href => "#"}
+			%> to reload the list.
+		</div>
 	</div>
 	<script type="text/javascript">
-		<%= visual_effect(:blind_down, "needs_update") %>
+		<%= visual_effect(:highlight, "needs_update", :startcolor => "#ffff99", :endcolor => "#ffffdd") %>
 	</script>
-	<br />
+	<div id="update_filler">&nbsp</div>
 <% end %>
-<% if flash[:notice] -%>
-	<div id="notice">
-		<a href="#" onclick="jQuery('#notice').hide();" style="float:right;"><%= image_tag("error.png", :border => 0, :width => 15, :height => 15) %></a>
-		<%= flash[:notice] %>
-	</div>
-	<script type="text/javascript">
-		<%= visual_effect(:highlight, "notice", :startcolor => "#ffff99", :endcolor => "#f0f0f0") %>
-	</script>
-<% end -%>
 <div style="float:left;display:inline;padding-left:3px;">
 	<% (97..122).to_a.each do |letter| %>
 		<%= sort_first_character letter.chr %>
@@ -38,11 +66,11 @@
 	<fieldset style="padding-bottom:10px;">
 		<legend>Filter Realms</legend>
 			<form name="filterage" action="" method="post" style="display:inline;">
-				<%= image_tag("spinner-search.gif", :align => "middle", :border => 0, :id => "spinner-type", :style => "display:none;") %>
+				<%= image_tag("spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner-type", :style => "display:none;") %>
 				<%= select_tag "type", options_for_select(Realm.gettypes) %>&nbsp;&nbsp;
-				<%= image_tag("spinner-search.gif", :align => "middle", :border => 0, :id => "spinner-pop", :style => "display:none;") %>
+				<%= image_tag("spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner-pop", :style => "display:none;") %>
 				<%= select_tag "pop", options_for_select(Realm::POPULATION) %>&nbsp;&nbsp;
-				<%= image_tag("spinner-search.gif", :align => "middle", :border => 0, :id => "spinner-locale", :style => "display:none;") %>
+				<%= image_tag("spinner-search.gif", :align => "absmiddle", :border => 0, :id => "spinner-locale", :style => "display:none;") %>
 				<%= select_tag "locale", options_for_select(Realm.getlocales) %>&nbsp;&nbsp;
 			</form>
 			<%= observe_field "type", :frequency => 2, :update => "table", :before => "jQuery('#spinner-type').show();", :success => "jQuery('#spinner-type').hide();", :url => {:controller => "status", :action => "index"}, :with => "type" %>

@@ -380,7 +380,7 @@ td.low {
 td.medium {
 	color: #96A700;
 }
-td.high {
+td.high, td.na {
 	color: #B30000;
 }
 

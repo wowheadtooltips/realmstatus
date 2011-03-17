@@ -33,7 +33,7 @@
 				</td>
 				<td align="left"><%= realm_url_helper(realm.name, realm.locale) %></td>
 				<td align="center" class="<%= realm.realmtype.downcase.gsub(' ', '') %>"><%= realm.realmtype %></td>
-				<td align="center" class="<%= realm.population.downcase %>"><%= realm.population %></td>
+				<td align="center" class="<%= realm.population.downcase.gsub('/', '') %>"><%= realm.population %></td>
 				<td align="center"><%= image_tag("flags/" + realm.flag, :title => realm.locale) %>&nbsp;<%= realm.locale %></td>
 				<td align="center"><%= realm.queue %></td>
 			</tr>
@@ -41,6 +41,6 @@
 	</table>
 	<br />
 	<%= page_entries_info @realms %>
-	<%= will_paginate @realms, {:params => {:query => params[:query], :sort => params[:sort], :type => params[:type], :pop => params[:pop], :locale => params[:locale]}} %>
+	<%= will_paginate @realms, {:params => {:filter => params[:filter], :query => params[:query], :sort => params[:sort], :type => params[:type], :pop => params[:pop], :locale => params[:locale]}} %>
 	<br />
 <% end %>

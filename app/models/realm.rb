@@ -51,24 +51,9 @@ class Realm < ActiveRecord::Base
 		@realms.count
 	end
 	
-	# list the realms in select form
-	def self.get_realms_for_select
-		#realms = self.find_by_sql("SELECT `realm` FROM `sites` ORDER BY `realm` ASC")
-		sites = self.find(:all)
-		realms = []
-		x = 0
-		sites.each do |site|
-			realms[x] = site.realm.titleize.gsub('\\', '') if ! realms.nil? && ! realms.include?(site.realm.titleize.gsub('\\', ''))
-			x += 1
-		end
-		realms = realms.compact.sort
-		realms.reject(&:blank?)
-		realms.insert(0, 'Sort by Realm')
-	end
-	
 	# list of types for select form
 	def self.gettypes
-		realms = self.find(:all)
+		realms = self.find(:all, :select => "realmtype")
 		types = []; x = 0;
 		realms.each do |realm|
 			if !types.nil? && !types.include?(realm.realmtype)
@@ -82,7 +67,7 @@ class Realm < ActiveRecord::Base
 	
 	# list of locales for select form
 	def self.getlocales
-		realms = self.find(:all)
+		realms = self.find(:all, :select => "locale")
 		locales = []; x = 0;
 		realms.each do |realm|
 			if !locales.nil? && !locales.include?(realm.locale)
@@ -104,7 +89,7 @@ class Realm < ActiveRecord::Base
 		
 		# get the last update from sql, plus one hour (3600 seconds)
 		entry = self.first
-		added = entry.added.to_i + 3600 # => 3600 seconds is one hour
+		added = entry.added.to_i + 1.hour # => 3600 seconds is one hour
 		
 		# if an hour has passed since last update, then another is required
 		return cur > added ? true : false

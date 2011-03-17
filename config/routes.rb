@@ -4,11 +4,11 @@ ActionController::Routing::Routes.draw do |map|
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
+  #   map.connect "products/:id", :controller => "catalog", :action => "view"
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
+  #   map.purchase "products/:id/purchase", :controller => "catalog", :action => "purchase"
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
@@ -40,12 +40,15 @@ ActionController::Routing::Routes.draw do |map|
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
-  map.home 'home', :controller => 'status', :action => 'gohome'				# goto the homepage
-  map.forums 'forums', :controller => 'status', :action => 'forums'		# goto the forums
-  map.wiki 'wiki', :controller => 'status', :action => 'wiki'					# goto the documentation wiki
-  map.sitedb 'sitedb', :controller => 'status', :action => 'sitedb'		# goto the site database
-  map.update 'update', :controller => 'status', :action => 'update'		# update realm list
+  # consider removing or commenting them out if you"re using named routes and resources.
+  map.connect ":controller/:action/:id"
+  map.connect ":controller/:action/:id.:format"
+  
+  map.with_options(:controller => "status") do |status_map|
+  	status_map.home "home", 		:action => "gohome"		# goto the homepage
+  	status_map.forums "forums",	:action => "forums"		# goto the support forums
+  	status_map.wiki "wiki",			:action => "wiki"			# goto the documentation wiki
+  	status_map.sitedb "sitedb",	:action => "sitedb"		# goto the site database
+  	status_map.update "update",	:action => "update"		# update realm list
+  end
 end
