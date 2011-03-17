@@ -19,10 +19,10 @@ This a proof of concept application I wrote to prove the ability to be able to s
 4. Create the database tables:
 		rake db:migrate
 5. Run `ruby script/update` from the command line to parse the realm list and fill your database.
-  * The application is designed to request an update every hour.  You could setup a CRON job to run the `ruby script/update` script every x, or use the built in system.
+6. **OPTIONAL** The application is designed to request an update every hour.  You could setup a CRON job to run the `ruby script/update` script every x, or use the built in system.
 
 ## Contact
 + Website: <http://wowhead-tooltips.com>
 + E-Mail: <adam@wowhead-tooltips.com>
-+ Github: <https://github.com/wowheadtooltips
++ Github: <https://github.com/wowheadtooltips>
 
