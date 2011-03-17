@@ -24,6 +24,14 @@ This a proof of concept application I wrote to prove the ability to be able to s
 ## TODO
 + I am aware that the sort by first letter is not currently functioning.  While I am not sure why, I will get it fixed A.S.A.P.
 
+## Requirements
++ Ruby 1.8.7
++ Rails 2.3.8
++ open-uri
++ will_paginate 2.3.15
++ Phusion Passenger 3.0.2 (for deployment via Apache)
++ **All required gems are located in the `vendor` folder.**
+
 ## Contact
 + Website: <http://wowhead-tooltips.com>
 + E-Mail: <adam@wowhead-tooltips.com>
