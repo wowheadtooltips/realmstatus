@@ -4,9 +4,9 @@ This a proof of concept application I wrote to prove the ability to be able to s
 ## Installation
 
 1. Grab the source code from the Git repository:
-	git clone git@github.com:wowheadtooltips/realmstatus.git realmstatus
+		git clone git@github.com:wowheadtooltips/realmstatus.git realmstatus
 2. Rename `config/database.yml.example` to `config/database.yml`:
-	mv config/database.yml.example config/database.yml
+		mv config/database.yml.example config/database.yml
 3. Edit `config/database.yml` to your liking. //MySQL is default, but any SQL flavor should work.//
 	adapter: mysql
 	encoding: utf8
