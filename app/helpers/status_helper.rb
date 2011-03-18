@@ -3,7 +3,7 @@ module StatusHelper
 		eu = ['english', 'french', 'german', 'russian', 'spanish', 'oceanic']
 		url = 'http://wowwiki.com/Server:' + realm.titleize.gsub(' ', '_').gsub('\\', '')
 		url += '_Europe' if eu.include?(locale.downcase)
-		link_to realm.titleize.gsub('\\', ''), url
+		link_to realm.titleize.gsub('\\', '').gsub('Highlight', 'highlight'), url
 	end
 	
 	def sort_first_character(text)

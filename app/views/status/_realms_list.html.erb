@@ -31,7 +31,7 @@
 				<td width="5%" align="center">
 					<div class="status"><%= image_tag realm.status + ".png", :border => 0, :alt => realm.status.titleize, :title => realm.status.titleize %></div>
 				</td>
-				<td align="left"><%= realm_url_helper(realm.name, realm.locale) %></td>
+				<td align="left"><%= link_to realm.name, realm.wiki %></td>
 				<td align="center" class="<%= realm.realmtype.downcase.gsub(' ', '') %>"><%= realm.realmtype %></td>
 				<td align="center" class="<%= realm.population.downcase.gsub('/', '') %>"><%= realm.population %></td>
 				<td align="center"><%= image_tag("flags/" + realm.flag, :title => realm.locale) %>&nbsp;<%= realm.locale %></td>

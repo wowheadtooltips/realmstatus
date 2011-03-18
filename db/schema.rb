@@ -13,6 +13,7 @@ ActiveRecord::Schema.define(:version => 20110224041057) do
 
   create_table "realms", :force => true do |t|
     t.string   "name"
+    t.string   "wiki"
     t.string   "realmtype"
     t.string   "population"
     t.string   "locale"

@@ -34,6 +34,8 @@ class Realm < ActiveRecord::Base
 					realm.population = row.css("td.population span").text.squish
 					realm.locale = row.css("td.locale").text.squish
 					realm.added = timenow
+					realm.wiki = 'http://wowwiki.com/Server:' + row.css("td.name").text.squish.gsub(' ', '_').gsub('\\', '')
+					realm.wiki += '_Europe' if ['english', 'french', 'german', 'russian', 'spanish', 'oceanic'].include?(row.css("td.locale").text.squish.downcase)
 					if row.css("td.queue").text.squish.empty?
 						realm.queue = "None"
 					else

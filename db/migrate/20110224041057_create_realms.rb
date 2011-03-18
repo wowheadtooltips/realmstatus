@@ -2,6 +2,7 @@ class CreateRealms < ActiveRecord::Migration
   def self.up
     create_table :realms do |t|
       t.string :name
+      t.string :wiki
       t.string :realmtype
       t.string :population
       t.string :locale

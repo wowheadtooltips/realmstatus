@@ -53,6 +53,10 @@ class UpdateRealms
 					realm.locale = row.css("td.locale").text.squish
 					realm.added = timenow
 					
+					# generate the wiki link
+					realm.wiki = 'http://wowwiki.com/Server:' + row.css("td.name").text.squish.gsub(' ', '_').gsub('\\', '')
+					realm.wiki += '_Europe' if ['english', 'french', 'german', 'russian', 'spanish', 'oceanic'].include?(row.css("td.locale").text.squish.downcase)
+					
 					# realm queue (if any)
 					if row.css("td.queue").text.squish.empty?
 						realm.queue = "None"
